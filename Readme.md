@@ -2,4 +2,4 @@
 
 - Cursul [aici](https://www.udemy.com/course/react-the-complete-guide-incl-redux/)
 - Repo-ul cu resurse [aici](https://github.com/academind/react-complete-guide-course-resources/tree/main)
-
+- [Documentatia oficiala React - Starting from scratch](https://react.dev/learn/build-a-react-app-from-scratch)
