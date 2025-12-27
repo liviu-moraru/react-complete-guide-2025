@@ -38,3 +38,20 @@ qwik-ts             qwik
 ```
 03-React-Essentials> npm create vite@latest 01-starting-project -- --template react
 ```
+
+### Includerea imaginilor in bundle-ul de deployment
+
+- Pentru a include imaginile in bundle-ul de deployment ele trebie importate in codul principal cu import
+
+```
+import reactImg from './assets/react-core-concepts.png';
+
+function App() {
+  return (
+    ...
+    <img src={reactImg} alt="Stylized atom" />
+  );
+}
+
+```
+Obs: In codul JSX `<img src={reactImg} alt="Stylized atom" />`, nu se pune src="{{reactImg}}". Asta ar pune o valoare string pentru src
