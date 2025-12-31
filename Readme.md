@@ -55,3 +55,55 @@ function App() {
 
 ```
 Obs: In codul JSX `<img src={reactImg} alt="Stylized atom" />`, nu se pune src="{{reactImg}}". Asta ar pune o valoare string pentru src
+
+### Sintaxe alternative pentru props
+
+- Utilizarea operatorului spread pentru un obiect
+
+```
+export const CORE_CONCEPTS = [
+    {
+        image: componentsImg,
+        title: 'Components',
+        description:
+            'The core UI building block - compose the user interface by combining multiple components.',
+    },
+  
+];
+
+function CoreConcept(props) {
+    return (
+        <li>
+            <img src={props.image} alt={props.title} />
+            <h3>{props.title}</h3>
+            <p>{props.description}</p>
+        </li>
+    );
+}
+
+function App() {
+return (
+    <ul>
+        <CoreConcept {...CORE_CONCEPTS[0]} />
+    </ul>
+);
+
+```
+- Aici cheile obiectului devin chei pentru obiectul props al parametrului functiei
+- Echivaleaza cu `const props = {...object}`
+
+- O alterniva este si furnizarea unui obiect ca proprietate
+
+```
+<CoreConcept
+  {...CORE_CONCEPTS[0]} />
+```
+
+- Bazandu-se pe faptul ca operatorul spread pt. un obiect in Javascript poate sa furnizeze valori default pentru cheile obiectului, se pot furniza valori default pentru props
+
+```
+export default function Button({ caption, type = "submit" }) { 
+  // caption has no default value, type has a default value of "submit"
+}
+
+```
