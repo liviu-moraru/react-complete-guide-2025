@@ -1,11 +1,12 @@
 import reactImg from './assets/react-core-concepts.png';
 import {CORE_CONCEPTS} from "./data.js";
-import Header from "./components/Header.jsx";
+import Header from "./components/Header/Header.jsx";
 import CoreConcept from "./components/CoreConcept.jsx";
 
 function App() {
     return (
         <div>
+            <div className="header">Header</div>
             <Header />
             <main>
                 <section id="core-concepts">

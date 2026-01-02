@@ -107,3 +107,60 @@ export default function Button({ caption, type = "submit" }) {
 }
 
 ```
+
+### Construire stiluri aplicabile doar unei componente cu Vite
+
+- Se construieste un fisier cu extensia .module.css (Ex. Header.module.css)
+- In acest fisier se pun stilurile aplicabile doar pentru componenta respectiva, utilizandu-se clase in loc de taguri html
+
+```aiignore
+.header {
+    background-color:
+}
+
+.header img {
+    height: 5rem;
+    width: 10rem;
+    object-fit: cover;
+}
+
+``` 
+- Se importa in componenta stilurile cu import si se folosesc clasele pentru a aplica stilurile 
+```
+import styles from './Header.module.css';
+
+<header className={styles.header}>
+```
+
+- Vite proceseaza astfel importuile de tip .module.css:
+
+1. Transforma numele claselor in identificatori unici. Ex: .header => ._header_1tfqj_1
+
+```
+._header_1tfqj_1 {
+    text-align: center;
+    margin: 3rem 0;
+}
+
+._header_1tfqj_1 img {
+    height: 5rem;
+    width: 10rem;
+    object-fit: cover;
+}
+
+```
+2.Cand se importa un fisier .module.css (import styles from './Header.module.css'), vite (mai precis plugin-ul pe care vite il foloseste by default), creaza un obiect (ex. styles) cu proprietatile claselor din fisierul .module.css importat.
+
+```aiignore
+styles = {
+  "header": "_header__123abc"
+}
+```
+- Astfel, se poate folosi proprietatea className din componenta pentru a aplica stilurile din fisierul .module.css
+
+```aiignore
+<header className={styles.header}>
+```
+- In dev, vite va crea cate un link de tip style in head pentru fiecare fisier .module.css importat.
+- In prod, vite va crea unul sau mai multe fisiere bundle-uri css pentru intreaga aplicatie
+- 
