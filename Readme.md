@@ -167,3 +167,43 @@ styles = {
 ### Children props
 
 - Exista o proprietate children in React care este un array cu elementele din componenta
+
+### Pattern pentru event handler-uri
+
+- Cand se declara o functie care va fi folosita ca handler pentru un event, este recomandat sa se foloseasca arrow function pentru a evita probleme de context (this) si pentru a face codul mai citibil
+- In componenta se capteaza evenimente pe elemente din DOM. Atributele se definesc cu numele onXXX ex. onClick si trebuie sa fie functii
+
+```aiignore
+ <button onClick={onSelect}>{children}</button>
+```
+
+- Daca evenimentul trebuie captat de componenta parinete, handler-ul trebuie pasat ca parametru in functia componente
+
+```aiignore
+export default function TabButton({children, onSelect}) {
+
+    return (
+        <li>
+            <button onClick={onSelect}>{children}</button>
+        </li>
+    )
+}
+```
+- Apoi handler-ul este definit in componenta parinte.
+
+App.jsx
+```aiignore
+function App() {
+    function handleSelect(selectedButton) {
+        // selectedButton => 'components', 'jsx', 'props', 'state'
+        console.log(selectedButton);
+    }
+
+    return (
+        <TabButton onSelect={() => handleSelect('components')}>Components</TabButton>
+)
+```
+
+### useState
+
+- A se vedea o implementare conceptuala a useState si useEffect in fisierul `supl/hooks.js`

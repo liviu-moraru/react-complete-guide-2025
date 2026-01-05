@@ -3,16 +3,21 @@ import {CORE_CONCEPTS} from "./data.js";
 import Header from "./components/Header/Header.jsx";
 import CoreConcept from "./components/CoreConcept.jsx";
 import TabButton from "./components/TabButton.jsx";
+import {useState} from "react";
 
 function App() {
+
+    const [ selectedTopic, setSelectedTopic] = useState('Please click a button');
+
     function handleSelect(selectedButton) {
-        // selectedButton => 'components', 'jsx', 'props', 'state'
-        console.log(selectedButton);
+       setSelectedTopic(selectedButton);
+       console.log(selectedTopic);
     }
+
+    console.log('APP COMPONENT EXECUTING');
 
     return (
         <div>
-            <div className="header">Header</div>
             <Header />
             <main>
                 <section id="core-concepts">
@@ -33,6 +38,7 @@ function App() {
                         <TabButton onSelect={() => handleSelect('state')}>State</TabButton>
 
                     </menu>
+                    {selectedTopic}
                 </section>
             </main>
         </div>
