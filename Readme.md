@@ -163,4 +163,7 @@ styles = {
 ```
 - In dev, vite va crea cate un link de tip style in head pentru fiecare fisier .module.css importat.
 - In prod, vite va crea unul sau mai multe fisiere bundle-uri css pentru intreaga aplicatie
-- 
+
+### Children props
+
+- Exista o proprietate children in React care este un array cu elementele din componenta

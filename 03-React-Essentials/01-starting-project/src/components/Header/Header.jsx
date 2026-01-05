@@ -10,7 +10,7 @@ function genRandomInt(max) {
 
 export default function Header() {
     const description = reactDescriptions[genRandomInt(2)];
-    console.log(styles);
+
     return (
         <header className={styles.header}>
             <img src={reactImg} alt="Stylized atom" />
