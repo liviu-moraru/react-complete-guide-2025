@@ -269,3 +269,31 @@ return (
  
 )
 ```
+
+### Randarea listelor
+
+- Un pattern este folosirea metodei map pentru a randa listele
+
+```aiignore
+function Todo({text}) {
+    return <li>{text}</li>;
+}
+
+
+export const DUMMY_TODOS = [
+    'Learn React',
+    'Practice React',
+    'Profit!'
+];
+
+
+export default function App() {
+    return (
+        <ul>
+            {DUMMY_TODOS.map(todo => <Todo key={todo} text={todo}></Todo>)}
+        </ul>
+
+    )
+}
+```
+**Observatie**: key este un atribut necesar pentru a randa listele.
