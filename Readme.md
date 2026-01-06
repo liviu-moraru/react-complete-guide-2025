@@ -207,3 +207,65 @@ function App() {
 ### useState
 
 - A se vedea o implementare conceptuala a useState si useEffect in fisierul `supl/hooks.js`
+
+### Randare conditiopnala
+
+- Alternativa 1
+
+```
+return (
+<>
+ {!selectedTopic && <p>Please select a topic.</p>}
+ {selectedTopic && (
+       <div id="tab-content">
+            <h3>{EXAMPLES[selectedTopic].title}</h3>
+            <p>{EXAMPLES[selectedTopic].description}</p>
+            <pre>
+                <code>
+                   {EXAMPLES[selectedTopic].code}
+                </code>
+            </pre>
+       </div>
+ )}
+ </>
+```
+
+**Observatie**: In React, statementul return trebuie sa intoarca un singur element root. 
+De aceea rezultatul aici trebuie imbricat in <>...</>
+
+- Alternativa 2
+- Setarea unei variabile care sa tina continutul JSX
+
+```
+let tabContent = <p>Please select a topic.</p>;
+    if (selectedTopic) {
+        tabContent = (
+            <div id="tab-content">
+            <h3>{EXAMPLES[selectedTopic].title}</h3>
+            <p>{EXAMPLES[selectedTopic].description}</p>
+            <pre>
+                            <code>
+                            {EXAMPLES[selectedTopic].code}
+                            </code>
+                        </pre>
+        </div>);
+    }
+ 
+ return (
+
+ tabContent
+);
+```
+**Observatie**: retunr ( {tabContent}) ar intoarce eroare, pentru ca return care intoare o singura variabila continand JSX nu trebuie pusa in {}.
+Altfel React intelege ca trebuie sa intoarca obiectul {tabContent: tabContent}
+
+- Daca insa return contine si fragment JSX, se pune {} 
+
+```aiignore
+return (
+    <div>
+        {tabContent}
+    </div>
+ 
+)
+```
