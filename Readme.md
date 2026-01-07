@@ -327,3 +327,61 @@ retunr (
 ### Splitting components
 
 **Cand se schimba starea unei componente, doar aceasta este re-renderizata, restul componentelor nu sunt re-renderizate.**
+
+### Patternul forwaring props
+
+- Problema:
+- Cand folosim o componenta ii furnizam diferite proprietati pe care le folosim in interiorul componentei.
+
+```aiignore
+<Section id="examples" title="Examples">
+```
+- In interiorul componentei putem desface proprietatile si le folosim in interiorul componentei.
+- Dar putem, pe toate sau unele sa le transmitem ca atare in interior, astfel:
+
+```aiignore
+export default function Section({ title, children, ...props }) {
+  return (
+    <section {...props}>
+      <h2>{title}</h2>
+      {children}
+    </section>
+  );
+}
+```
+- Aici unele proprietati le desfacem individual (title, childrem)
+- Restul, prin operatorul REST ..., le unim in obiectul props
+- Apoi le desfacem in interiorul componentei section cu sintaza {...props} 
+
+Aceasta sintaxa este tradusa in JavaScript cu:
+
+```aiignore
+React.createElement('section', { ...props }, null); 
+```
+- Mai nou, este tradus folosind functiile jsx sau jsxDEV(in development)
+- Componenta Section de mai sus este echivalenta cu:
+
+```aiignore
+import { jsxDEV as _jsxDEV } from "react/jsx-dev-runtime";
+
+export default function Section({ children, title, ...rest }) {
+    return _jsxDEV("section", {
+        ...rest, // Operatorul spread rămâne valid în JS pentru obiectul de props
+        children: [
+            _jsxDEV("h2", {
+                children: title
+            }, undefined, false, {
+                fileName: "src/Section.jsx",
+                lineNumber: 6,
+                columnNumber: 13
+            }, this),
+            children
+        ]
+    }, undefined, false, {
+        fileName: "src/Section.jsx",
+        lineNumber: 5,
+        columnNumber: 9
+    }, this);
+}
+
+```
