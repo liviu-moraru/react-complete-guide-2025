@@ -385,3 +385,70 @@ export default function Section({ children, title, ...rest }) {
 }
 
 ```
+### Pattern: Setarea dinamica a tipului componentei
+
+- In JSX, un tag in lower case (ex: `<buttonContainer>`) este luata literal ca un element HTML (e compilat in <buttonsContainer>)
+- un tag in upper case (ex: `<ButtonContainer>`) este compilata ca:
+
+```aiignore
+React.createElement(ButtonsContainer, null, null); //sau in React nou jsx
+```
+- Deci ButtonsContainer este considerata o variabila si evaluata. Daca evaluarea este un string,   React o trateaza ca un element HTML.
+- Daca evaluarea este o functie, React o considera ca o componenta si o executa.
+
+- Exemplu:
+- In componenta Examples.jsx
+
+```aiignore
+<Tabs buttonsContainer={"menu"} buttons={
+                <>
+                    <TabButton isSelected={selectedTopic === 'components'} onClick={() => handleSelect('components')}>Components</TabButton>
+                    <TabButton isSelected={selectedTopic === 'jsx'} onClick={() => handleSelect('jsx')}>JSX</TabButton>
+                    <TabButton isSelected={selectedTopic === 'props'} onClick={() => handleSelect('props')}>Props</TabButton>
+                    <TabButton isSelected={selectedTopic === 'state'} onClick={() => handleSelect('state')}>State</TabButton>
+                </>
+            }>
+                {tabContent}
+            </Tabs>
+```
+
+- Componenta Tabs:
+
+```aiignore
+export default function Tabs({children, buttons, buttonsContainer}) {
+  const  ButtonsContainer = buttonsContainer || 'menu';
+    return (
+   <>
+   <ButtonsContainer>
+       { buttons}
+   </ButtonsContainer>
+       {children}
+   </>
+  );
+}
+
+```
+- Esenta aici e linia unde se creaza o variabila in upper case care e folosita ca tag:
+
+```
+const  ButtonsContainer = buttonsContainer || 'menu';
+```
+- Mai simplu este sa se foloseasca direct proprietatea in upper case:
+
+```aiignore
+<Tabs ButtonsContainer={"menu"} >
+```
+si atunci nu mai e nevoie de linia respectiva in componenta
+```
+export default function Tabs({children, buttons, ButtonsContainer='menu'}) {
+  //const  ButtonsContainer = buttonsContainer || 'menu';
+    return (
+   <>
+   <ButtonsContainer>
+       { buttons}
+   </ButtonsContainer>
+       {children}
+   </>
+  );
+}
+```
