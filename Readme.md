@@ -297,3 +297,29 @@ export default function App() {
 }
 ```
 **Observatie**: key este un atribut necesar pentru a randa listele.
+
+### Fragment
+
+- O componenta Fragment este un element care nu este randat in DOM,
+- O componenta intoarce doar un parinte
+
+```aiignore
+return (
+    <>
+        <p>Hello</p>
+        <p>World</p>
+    </>
+)
+```
+- Este syntactic sugar pentru <React.Fragment></React.Fragment>
+
+```aiignore
+import {Fragment, useState} from "react";
+
+retunr (
+    <Fragment>
+        <p>Hello</p>
+        <p>World</p>
+    </Fragment>
+)
+```
