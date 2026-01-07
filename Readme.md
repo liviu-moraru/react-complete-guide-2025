@@ -452,3 +452,28 @@ export default function Tabs({children, buttons, ButtonsContainer='menu'}) {
   );
 }
 ```
+
+## Programul Tic-Tac-Toe
+
+### Proiectul de start Vite. Directoare si referinte la fisiere statice
+
+- In proiectul generat de Vite, tot ce se gaseste in folderul public este disponibil pentru a fi accesate prin URL-ul / (root)
+- npm run build copiaza in folderul dist fiecare fisier din public
+- La fel npm run dev, web serverul trateaza ce e in folderul public ca avand URL-ul / (root)
+- De aceea, in index.css referintele la url-uri trebuie sa fie absolute.
+- In caz contrat la development vor fi gasite (il cauta si in radacina), dar in prod nu, pentru ca sunt tratate ca fiind relative la bundleul css, pcare se gaseste in folderul dist/assets
+- De aceea corect este `url('/bg-pattern-dark.png');` si nu `url(bg-pattern-dark.png);`:
+
+```aiignore
+body {
+    background: radial-gradient(
+            circle at top,
+            rgba(241, 210, 70, 0.98),
+            rgba(250, 176, 103, 0.87)
+    ),
+    url('/bg-pattern-dark.png');
+    background-repeat: repeat;
+    background-size: 100% 100%, 30% 30%, 100% 100%;
+    min-height: 110rem;
+}
+```
