@@ -323,3 +323,7 @@ retunr (
     </Fragment>
 )
 ```
+
+### Splitting components
+
+**Cand se schimba starea unei componente, doar aceasta este re-renderizata, restul componentelor nu sunt re-renderizate.**
