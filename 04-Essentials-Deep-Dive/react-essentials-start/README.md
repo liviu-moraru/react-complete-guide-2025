@@ -14,3 +14,37 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Pattern: Multiple JSX Slots
+
+- Daca in interiorul unei componente vrem sa punem continut venit din folosirea componentei in mai multe locuri, in plus fata de proprietatea children.
+- Exemplu:
+- Putem pasa un slot ca proprietatea buttons, care va contine un array de componente care vor fi afisate in interiorul componentei Tabs.
+
+```aiignore
+export default function Tabs({children, buttons}) {
+  return (
+   <>
+   <menu>
+       { buttons}
+   </menu>
+       {children}
+   </>
+  );
+}
+```
+- Utilizare:
+
+```aiignore
+<Tabs buttons={
+                <>
+                    <TabButton isSelected={selectedTopic === 'components'} onClick={() => handleSelect('components')}>Components</TabButton>
+                    <TabButton isSelected={selectedTopic === 'jsx'} onClick={() => handleSelect('jsx')}>JSX</TabButton>
+                    <TabButton isSelected={selectedTopic === 'props'} onClick={() => handleSelect('props')}>Props</TabButton>
+                    <TabButton isSelected={selectedTopic === 'state'} onClick={() => handleSelect('state')}>State</TabButton>
+                </>
+            }>
+                {tabContent}
+            </Tabs>
+```
+- Slot-urile sunt folosite pentru a pune componentele care vor fi afisate in interiorul componentei Tabs.
