@@ -509,3 +509,14 @@ return {
 - In cazul folosirii unei valori simple, la randarea componentei va fi afisata valoarea 1 pentru starea curenta
 - In cazul folosirii unei functii ca argument pentru setXXX, starea va fi actualizata in functie de starea curenta si la randarea componentei va fi afisata valoarea 3 pentru starea curenta
 
+
+### Implementare Two way binding pentru inputuri
+
+```aiignore
+function handleChange(event) {
+   setPlayerName(event.target.value);
+}
+
+<input type="text" required value={playerName} onChange={handleChange}/>
+```
+- Ideea este de a seta atributul value cu starea curenta a componentei si sa foloseasca event-ul onChange pentru a actualiza starea curenta.
