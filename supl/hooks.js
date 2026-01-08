@@ -66,9 +66,17 @@ function MyComponent() {
     // Simulate a user click
     return {
         click: () => {
+
+            // La randare valoarea 3. Corect
             setCount(count => count + 1);
             setCount(count => count + 1);
             setCount(count => count + 1);
+
+            // La randare valoarea 1. Gresit
+            // setCount(count + 1);
+            // setCount(count + 1);
+            // setCount(count + 1);
+
             setName("ReactX");
         }
     };

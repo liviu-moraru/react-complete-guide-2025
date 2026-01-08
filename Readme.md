@@ -485,3 +485,27 @@ import reactImg from '../../assets/react-core-concepts.png';
 <img src={reactImg} alt="Stylized atom" />
 
 ```
+
+## De ce argumentul pentru setXXX, rezultat din useState trebuie este bine sa fie o functie
+
+- A se vedea implementarea conceptuala a useState si useEffect in fisierul `supl/hooks.js`
+- Este bine sa fie o functie pentru ca permite actualizarea state-ului in functie de starea curenta, evitand posibile probleme de sincronizare si comportament neintenit. De exemplu, daca avem un state care depinde de un alt state, folosind o functie ca argument pentru setXXX, putem accesa si actualiza starea curenta in functie de aceasta depindenta. (AI)
+- In fisierul hooks.js a se vedea diferenta intre folosirea unei functii ca argument pentru setXXX si folosirea unei valori simple. 
+
+```aiignore
+return {
+        click: () => {
+            // setCount(count => count + 1);
+            // setCount(count => count + 1);
+            // setCount(count => count + 1);
+            setCount(count + 1);
+            setCount(count + 1);
+            setCount(count + 1);
+
+            setName("ReactX");
+        }
+    };
+```
+- In cazul folosirii unei valori simple, la randarea componentei va fi afisata valoarea 1 pentru starea curenta
+- In cazul folosirii unei functii ca argument pentru setXXX, starea va fi actualizata in functie de starea curenta si la randarea componentei va fi afisata valoarea 3 pentru starea curenta
+
