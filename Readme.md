@@ -477,3 +477,11 @@ body {
     min-height: 110rem;
 }
 ```
+- Folderul src/assets contine fisiere care nu vor fi disponibile ca URL-uri statice in situl generat. In schimb, contine fisiere (cum ar fi imagini) care vor fi procesate de Vite si incluse in bundle-ul de deploy (acestea bundluri se gasesc in subdirectorul assets al radacinei sitului generat)
+
+```aiignore
+import reactImg from '../../assets/react-core-concepts.png';
+
+<img src={reactImg} alt="Stylized atom" />
+
+```
