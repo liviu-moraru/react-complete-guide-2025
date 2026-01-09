@@ -531,3 +531,122 @@ function handleChange(event) {
 ```aiignore
 npm install --save-dev --save-exact prettier
 ```
+### Starea trebuie updatata in mod imutabil
+
+- In primul rand cand starea este o valoare de tip referinta (obiect, array etc.), daca este intoarsa vechea referinta, componenta nu va fi re-randata, pentru ca React verifica daca noua stare este diferita fata de vechea stare
+  ( deci valoarea referintelor )
+
+Ex:
+```aiignore
+setGameBoard((prevState) => {
+      prevState[rowIndex][colIndex] = "X";
+      return prevState;
+    });
+```
+- In acest caz nu va fi re-randata componenta.
+- In cazul:
+
+```aiignore
+setGameBoard((prevState) => {
+      prevState[rowIndex][colIndex] = "X";
+      return [...prevState];
+    });
+```
+Componenta va fi re-randata, pentru ca starea este o noua referinta. Dar fiind o shallow copy a starii vechi,  implementarea nu e corecta.
+
+- Iata ce se poate intampla in cazul in care se modifica vechea stare (continutul referintei)
+- Vezi exmplul ./supl/hooks-arrays.js
+- In acest exemplu vrem sa tinem si o istorie a starii (eventual pentru "Undo")
+Exemplu eronat:
+
+```aiignore
+let initialArray = [1,2,3];
+let history = [];
+
+function MyComponent() {
+    const [array, setArray] = useState(initialArray);
+    const [hist, setHistory] = useState(history);
+
+    console.log(`Current Array: ${array}. History: ${hist}`);
+
+    // Simulate a user click
+    return {
+        click: () => {
+
+            setArray(prevArray => {
+                prevArray[1] = prevArray[1] + 100;
+                setHistory(prevHist => { 
+                    return [...prevHist, prevArray]
+                });
+                return [...prevArray];
+              
+            });
+
+
+        }
+    };
+}
+
+const app = render();
+app.click();
+setTimeout(() => app.click(), 1000);
+```
+
+-Output:
+```aiignore
+Current Array: 1,2,3. History: 
+Current Array: 1,102,3. History: 1,102,3
+Current Array: 1,202,3. History: 1,102,3,1,202,3
+
+```
+
+- Solutia corecta:
+
+```
+return {
+        click: () => {
+
+            setArray(prevArray => {
+                const newArray = [...prevArray];
+                newArray[1] = newArray[1] + 100;
+                setHistory(prevHist => {
+                    return [...prevHist, prevArray]
+                });
+               return newArray;
+
+            });
+
+
+        }
+    };
+```
+-Output:
+```aiignore
+Current Array: 1,2,3. History: 
+Current Array: 1,102,3. History: 1,2,3
+Current Array: 1,202,3. History: 1,2,3,1,102,3
+```
+
+
+setGameBoard((prevBoard) => {
+const updatedBoard = [...prevBoard.map((innerArray) => [...innerArray])];
+console.log(updatedBoard === prevBoard);
+updatedBoard[rowIndex][colIndex] = "X";
+
+      return updatedBoard;
+    });
+
+### Solutia pentru a crea o copie a unui array de array pentru schimbarea starii
+
+- Aceasta este o solutie mai buna decat cea din curs:
+
+```aiignore
+setGameBoard((prevBoard) => {
+      const updatedBoard = prevBoard.map((innerArray) => [...innerArray]);
+      updatedBoard[rowIndex][colIndex] = "X";
+
+      return updatedBoard;
+    });
+```
+
+- Articol despre [Reference vs Primitive Types in JavaScript](https://academind.com/tutorials/reference-vs-primitive-values)
