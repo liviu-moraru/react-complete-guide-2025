@@ -650,3 +650,41 @@ setGameBoard((prevBoard) => {
 ```
 
 - Articol despre [Reference vs Primitive Types in JavaScript](https://academind.com/tutorials/reference-vs-primitive-values)
+
+### Pattern: Lefting the state up
+
+- Daca avem mai multe componente care depind de o aceeasi "stare", patternul sugereaza sa se utilizeze o stare gestionata in componenta parinte compuna
+- Procesarea starii se va face in componenta parinte,
+- Starea va fi disponibila in componentele copil prin props
+- Tot prin props vor fi furnizate functiile din parinte care participa la schimbarea starii, pentru ca sa fie apelate in componenta copil
+
+In App.jsx
+```aiignore
+ function handleSelectSquare() {
+    setActivePlayer(activePlayer === "X" ? "O" : "X");
+  }
+<GameBoard
+          onSelectSquare={handleSelectSquare}
+          activePlayerSymbol={activePlayer}
+ />
+
+```
+In GameBoard.jsx
+```aiignore
+
+export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
+  const [gameBoard, setGameBoard] = useState(initialGameBoard);
+  function handleSelectSquare(rowIndex, colIndex) {
+    setGameBoard((prevBoard) => {
+      const updatedBoard = prevBoard.map((innerArray) => [...innerArray]);
+      updatedBoard[rowIndex][colIndex] = activePlayerSymbol;
+
+      return updatedBoard;
+    });
+    onSelectSquare();
+  }
+...
+<button onClick={() => handleSelectSquare(rowIndex, colIndex)}>
+                  {playerSymbol}
+ </button>
+```
