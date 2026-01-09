@@ -520,3 +520,14 @@ function handleChange(event) {
 <input type="text" required value={playerName} onChange={handleChange}/>
 ```
 - Ideea este de a seta atributul value cu starea curenta a componentei si sa foloseasca event-ul onChange pentru a actualiza starea curenta.
+
+### "Misterul" formatarii cu prettier in WebStorm
+
+- In Settings -> Languages & Frameworks -> JavaScript -> Prettier:
+  - Select Automatic Prettier Configuration
+  - Check the box Run on save
+**Observatie**: Si totusi, nu se formateaza cu prettier (decat manual cu Reformat with Prettier), decat daca se instaleaza in proiect prettier
+
+```aiignore
+npm install --save-dev --save-exact prettier
+```
