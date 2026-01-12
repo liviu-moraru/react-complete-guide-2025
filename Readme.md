@@ -688,3 +688,11 @@ export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
                   {playerSymbol}
  </button>
 ```
+
+### Avoid Global Mutation
+
+- Nu este bine sa se foloseasca o variabila "globala" (chiar in interiorul unui modul), a carei valoare sa fie schimbata in interiorul unei componente
+- De aceea solutia cu variabila globala `gameBoard` nu e ideala
+- Mai bine se foloseste o stare gestionata in componenta parinte, pentru a deriva o variabila locala componentei
+
+(In cod functia `deriveGameBoard`)
