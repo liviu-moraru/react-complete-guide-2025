@@ -14,7 +14,7 @@ function App() {
   function handleUserInputChange(inputElement, event) {
     setUserInput((prevState) => ({
       ...prevState,
-      [inputElement]: event.target.value,
+      [inputElement]: parseInt(event.target.value), // sai +event.target.value
     }));
   }
 
