@@ -696,3 +696,7 @@ export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
 - Mai bine se foloseste o stare gestionata in componenta parinte, pentru a deriva o variabila locala componentei
 
 (In cod functia `deriveGameBoard`)
+
+## Modulul 6 Styling in React
+
+- [Vezi detalii styling aici](./06-Styling/README.md)
