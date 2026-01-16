@@ -30,7 +30,7 @@ export default function AuthInputs() {
             style={{
               backgroundColor: emailNotValid ? "#fed2d2" : "#d1d5db",
             }}
-            //className={emailNotValid ? 'invalid' : undefined}
+            //className={emailNotValid ? "invalid" : undefined}
             onChange={(event) => handleInputChange("email", event.target.value)}
           />
         </p>
