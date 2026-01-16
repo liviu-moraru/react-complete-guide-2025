@@ -29,3 +29,19 @@
            
 />
 ```
+
+### Aplicarea conditionala a unei clase
+
+```aiignore
+<input
+            type="email"
+            className={emailNotValid ? "invalid" : undefined}
+/>
+```
+Obs: Pt. a nu se aplica clasa, valoarea lui className trebuie sa fie `undefined`.
+
+- Cand trebuie aplicate mai multe clase, de preferat utilizarea **template literals**
+
+```aiignore
+<label className={`label ${emailNotValid ? "invalid" : ""}`}>
+```
