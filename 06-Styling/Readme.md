@@ -252,3 +252,34 @@ export default function Header() {
 
 ```
 - Astfel se poate crea un stil complex, cuprinzand si stiluri pentru elementele copil ale componentei styled.
+
+## Tailwind in React
+
+- Pe [youtube](https://www.youtube.com/watch?v=bnfhmr1v028)
+- Pasi pentru instalare
+  1) Instalare pachet tailwindcss si plugin pentru vite
+
+    ```aiignore
+    > npm install tailwindcss @tailwindcss/vite
+    ```
+
+    2) Modificare fisier vite.config.js, prin adaugare plugin tailwindcss
+    ```aiignore
+      import { defineConfig } from "vite";
+      import react from "@vitejs/plugin-react";
+      import tailwindcss from "@tailwindcss/vite";
+    
+      // https://vite.dev/config/
+      export default defineConfig({
+          plugins: [react(), tailwindcss()],
+      });
+  ```
+- Se sterge fisierul App.css si se goleste fisierul index.css
+- Se modifica fisierul index.css
+
+```aiignore
+@import "tailwindcss";
+```
+- 
+
+
