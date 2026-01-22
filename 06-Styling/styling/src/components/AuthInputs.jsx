@@ -1,5 +1,15 @@
 import { useState } from "react";
+import { styled } from "styled-components";
+import Input from "./Input.jsx";
+import Button from "./Button.jsx";
 
+const ControlContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+`;
+console.log("ControlContainer", ControlContainer);
 export default function AuthInputs() {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
@@ -22,40 +32,26 @@ export default function AuthInputs() {
 
   return (
     <div id="auth-inputs">
-      <div className="controls">
-        <p className="paragraph">
-          <label className={`label ${emailNotValid ? "invalid" : ""}`}>
-            Email
-          </label>
-          <input
-            type="email"
-            // style={{
-            //   backgroundColor: emailNotValid ? "#fed2d2" : "#d1d5db",
-            // }}
-            className={emailNotValid ? "invalid" : undefined}
-            onChange={(event) => handleInputChange("email", event.target.value)}
-          />
-        </p>
-        <p>
-          <label className={`label ${passwordNotValid ? "invalid" : ""}`}>
-            Password
-          </label>
-          <input
-            type="password"
-            className={passwordNotValid ? "invalid" : undefined}
-            onChange={(event) =>
-              handleInputChange("password", event.target.value)
-            }
-          />
-        </p>
-      </div>
+      <ControlContainer>
+        <Input
+          label="Email"
+          invalid={emailNotValid}
+          onChange={(event) => handleInputChange("email", event.target.value)}
+        ></Input>
+        <Input
+          label="Password"
+          type="password"
+          invalid={passwordNotValid}
+          onChange={(event) =>
+            handleInputChange("password", event.target.value)
+          }
+        ></Input>
+      </ControlContainer>
       <div className="actions">
         <button type="button" className="text-button">
           Create a new account
         </button>
-        <button className="button" onClick={handleLogin}>
-          Sign In
-        </button>
+        <Button onClick={handleLogin}>Sign In</Button>
       </div>
     </div>
   );
