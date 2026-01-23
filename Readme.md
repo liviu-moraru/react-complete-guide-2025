@@ -704,3 +704,7 @@ export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
 ## Modulul 7 Debugging in React
 
 - [Vezi detalii debugging aici](07-Debugging/Readme.md)
+
+## Modulul 8 Working with Refs & Portals
+
+- [Vezi detalii working with refs & portals aici](08-Refs-Portals/Readme.md)
