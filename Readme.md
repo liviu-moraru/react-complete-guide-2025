@@ -699,8 +699,8 @@ export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
 
 ## Modulul 6 Styling in React
 
-- [Vezi detalii styling aici](./06-Styling/README.md)
+- [Vezi detalii styling aici](./06-Styling/Readme.md)
 
 ## Modulul 7 Debugging in React
 
-- [Vezi detalii debugging aici](./07-Debugging/README.md)
+- [Vezi detalii debugging aici](07-Debugging/Readme.md)
