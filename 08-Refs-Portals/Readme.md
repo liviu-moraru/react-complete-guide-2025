@@ -5,7 +5,8 @@
 - Pentru o implementare conceptuala a lui useRef, a se vedea in `/supl/useRef.js`
 - useRef e intr-un fel similar cu useState, in sensul in care inregistreaza (printr-o closure) o "stare"
 - in useRef aceasta stare este un obiect de forma : `{current: value}` returnat de functie.
-- spre deosebire de useState, nu exista o functie care sa modifice starea. Ea e modificata prin atribuire directa la proprietatea `current`.
+- spre deosebire de useState, nu exista o functie care sa modifice starea. Ea e modificata prin atribuire directa la proprietatea `current`. 
+- De fapt se pastreaza intre randari obiectul, deci de ex. se pot adauga proprietati noi in obiect care vor exista intre randari.
 - De asemenea modificarea starii nu produce re-renderizarea componentei.
 - La prima randare a componentei, `current` va fi setat la valoarea initiala.
 
