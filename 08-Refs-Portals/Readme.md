@@ -23,3 +23,55 @@ console.log(playerRef.current); // 10
 <input type="text" ref={playerRef} />
 ```
 -Dupa prima randare playerRef.current === HTMLInputElement
+
+### Componenta modala
+
+#### Elementul HTML \<dialog>
+
+- [Documentatia MDB](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog)
+- Elementul dialog nu apare decat daca contine atributul `open`.
+  - Daca elementul contine o forma avand atributul `method="dialog"` si un buton in interior, atunci dialogul se inchide odata cu apasarea butonului
+  - Butonul trebuie sa fie de tip `submit` (default) (`type="submit"`)
+  - Mai precis, apasarea butonului sterge atributul `open` din elementul dialog.
+```aiignore
+<dialog open>
+  <p>Greetings, one and all!</p>
+  <form method="dialog">
+    <button>OK</button>
+  </form>
+</dialog>
+```
+- Deschderea/inchiderea unei ferestre modale cu elementul \dialog>
+
+HTML:
+```aiignore
+<dialog>
+  <button autofocus>Close</button>
+  <p>This modal dialog has a groovy backdrop!</p>
+</dialog>
+<button>Show the dialog</button>
+```
+
+JavaScript:
+```aiignore
+const dialog = document.querySelector("dialog");
+const showButton = document.querySelector("dialog + button");
+const closeButton = document.querySelector("dialog button");
+
+// "Show the dialog" button opens the dialog modally
+showButton.addEventListener("click", () => {
+  dialog.showModal();
+});
+
+// "Close" button closes the dialog
+closeButton.addEventListener("click", () => {
+  dialog.close();
+});
+```
+CSS
+```aiignore
+::backdrop {
+  background-color: salmon;
+}
+```
+Pseudo-elementul `::backdrop` permite stilizarea fundalului modalului.
