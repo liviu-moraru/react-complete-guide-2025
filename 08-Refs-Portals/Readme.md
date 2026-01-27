@@ -75,3 +75,93 @@ CSS
 }
 ```
 Pseudo-elementul `::backdrop` permite stilizarea fundalului modalului.
+
+#### forwardRef
+- Permite accesarea referintei la componenta copil din componenta parinte. Este util pentru comunicarea intre componente in React.
+- Se foloseste cand avem de referentiat un element HTML existent intr-o componenta copil, din componenta parinte.
+
+TimerChallenge.jsx
+
+```aiignore
+const dialog = useRef();
+
+return (
+ <ResultModal
+        ref={dialog}
+        targetTime={targetTime}
+        result={"lost"}
+></ResultModal>
+)
+```
+ResultModal.jsx
+```aiignore
+import { forwardRef } from "react";
+
+function ResultModal({ result, targetTime }, ref) {
+  return (
+    <dialog ref={ref} className="result-modal">
+      <h2>You {result}</h2>
+      <p>
+        The target time was <strong>{targetTime} seconds.</strong>
+      </p>
+      <p>
+        You stopped the timer with <strong>X seconds left.</strong>
+      </p>
+      <form method="dialog">
+        <button>Close</button>
+      </form>
+    </dialog>
+  );
+}
+
+const ResultModalRef = forwardRef(ResultModal);
+export default ResultModalRef;
+```
+
+#### Cum functioneaza forwardRef?
+
+- O implementare conceptuala a lui forwardRef este :
+
+```aiignore
+function conceptualForwardRef(render) {
+  // It returns a special object that React recognizes as a "ForwardRef" type
+  return {
+    $$typeof: Symbol.for('react.forward_ref'),
+    render: render
+  };
+}
+```
+- Deci forwardRef intoarce un obiect cu proprietatea `render` care este o functie (o componenta functionala React)
+- Cum distinge functia render intre o componenta functionala React si o referinta forward?
+- functia React.createElement (inlocuita in ultimele versiuni de React cu jsx) intoarce un obiect de forma
+
+```aiignore
+{
+  type: App, // This is the 'Component' we discussed!
+  props: { title: "Win" },
+  key: null,
+  ref: someRef,
+  $$typeof: Symbol.for('react.element'), // This marks it as an ELEMENT
+}
+```
+- render apoi se uita la proprietatea `$$typeof` si urmeaza logica urmatoare:
+
+```aiignore
+function processElement(element) {
+  const Component = element.type; // This is App (the function or object)
+  const props = element.props;
+  const ref = element.ref;
+
+  if (Component.$$typeof === Symbol.for('react.forward_ref')) {
+    // It's the object returned by forwardRef()
+    return Component.render(props, ref);
+  } else if (typeof Component === 'function') {
+    // It's a standard function component
+    return Component(props);
+  }
+}
+```
+- Deci, render observa daca `element` este o functie sau un obiect Symbol.for('react.forward_ref')
+- In al doilea caz apeleaza componenta React pe care forwardRef a primit-o ca parametru, dar cu 2 argumente (props si ref)
+
+
