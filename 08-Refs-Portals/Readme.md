@@ -33,6 +33,7 @@ console.log(playerRef.current); // 10
   - Daca elementul contine o forma avand atributul `method="dialog"` si un buton in interior, atunci dialogul se inchide odata cu apasarea butonului
   - Butonul trebuie sa fie de tip `submit` (default) (`type="submit"`)
   - Mai precis, apasarea butonului sterge atributul `open` din elementul dialog.
+  - Dar fereastra de dialog se poate inchide si prin apasarea tastei Esc. De aceea **este bine sa se capteze evenimentul onClose** pe dialog, decit **onSubmit** pe forma, daca e ceva de facut cand se inchide fereastra modala.
 ```aiignore
 <dialog open>
   <p>Greetings, one and all!</p>
@@ -75,6 +76,8 @@ CSS
 }
 ```
 Pseudo-elementul `::backdrop` permite stilizarea fundalului modalului.
+
+
 
 #### forwardRef
 - Permite accesarea referintei la componenta copil din componenta parinte. Este util pentru comunicarea intre componente in React.
@@ -248,3 +251,18 @@ function handleStart() {
 
 return <ResultModal ref={dialog} />;
 ```
+### Portals - createPortal function
+
+- createPortal (importata din `react-dom`) permite randarea unei componente React intr-un element DOM existent din documentul curent, in alta pozitie decat cea in care componenta se gaseste pe pagina.
+
+> De regulă, în React, o componentă este randată ca un copil al celei mai apropiate componente părinte. Totuși, uneori ai nevoie ca o componentă (precum un modal, un tooltip sau un meniu dropdown) să fie "teleportată" în afara structurii HTML curente pentru a evita probleme de styling (de exemplu, z-index, overflow: hidden sau position: relative pe containerele părinte).
+
+- Sintaxa este:
+
+> createPortal(children, domNode)
+
+> children: Orice poate fi randat cu React (un element JSX, un fragment, un string etc.).
+
+> domNode: Elementul DOM real unde vrei să fie injectat codul (de exemplu, un element obținut prin document.getElementById()).
+ 
+
