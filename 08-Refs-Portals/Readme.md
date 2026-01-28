@@ -164,4 +164,87 @@ function processElement(element) {
 - Deci, render observa daca `element` este o functie sau un obiect Symbol.for('react.forward_ref')
 - In al doilea caz apeleaza componenta React pe care forwardRef a primit-o ca parametru, dar cu 2 argumente (props si ref)
 
+#### useImperativeHandle
 
+- Problema de rezolvat: Cu forwardRef, o componenta React parinte poate trimite referinta catre un element HTML dintr-o componenta React copil.
+- Dar aceasta "leaga" cumva utilizarea in componenta parinte de implementarea componentei copil.
+- De ex in componenta parinte trebuie sa 'stie' ca referinta este un element HTML dialog, asa ca daca implementarea componentei copil se schimba, legatura se strica
+
+```aiignore
+dialog.current.showModal();
+```
+- De aceea, este mai bine ca aceasta componenta copil sa defineasca o "interfata"(contract), independenta de implementarea interna, pe care componenta parinte sa o foloseasca
+- Aceasta se face prin `useImperativeHandle`
+- Iata o implementare conceptuala a lui useImperativeHandle:
+
+```aiignore
+function useImperativeHandle(ref, createHandle) {
+  // Inside React's internal lifecycle:
+  // It calls your function to get the "handle"
+  const handle = createHandle();
+  
+  // It then assigns that handle to the ref's current property
+  if (typeof ref === 'function') {
+    ref(handle);
+  } else if (ref) {
+    ref.current = handle;
+  }
+}
+```
+- Ce se modifica fata de implementarea doar cu forwardRef:
+- In componenta copil, se defineaza o referinta localata cu `const dialog = useRef();`
+- Apoi se apeleaza `useImperativeHandle` cu referinta primita de la parinte, ca prim argument si functia care returneaza "interfata" (un obiect)
+
+```aiignore
+const dialog = useRef(); // Internal ref to the DOM
+
+  useImperativeHandle(ref, () => {
+    // This is the ONLY thing the parent can see
+    return {
+      open() {
+        dialog.current.showModal();
+      },
+      close() {
+        dialog.current.close();
+      }
+    };
+  });
+```
+- Referinta locala se foloseste in atributul `ref` pentru componenta HTML care trebuie referentiata.
+
+ResultModal.jsx
+```aiignore
+// ResultModal.jsx
+const ResultModal = forwardRef(function ResultModal(props, ref) {
+  const dialog = useRef(); // Internal ref to the DOM
+
+  useImperativeHandle(ref, () => {
+    // This is the ONLY thing the parent can see
+    return {
+      open() {
+        dialog.current.showModal();
+      },
+      close() {
+        dialog.current.close();
+      }
+    };
+  });
+
+  return <dialog ref={dialog}>...</dialog>;
+});
+```
+- Cum o utilizeaza parinte?
+- Parintele foloseste interfata si ii transmite componentei copil, referinta locala intoarsa de useRef()
+
+```aiignore
+// TimerChallenge.jsx
+const dialog = useRef();
+
+function handleStart() {
+  // Instead of dialog.current.showModal() (Native DOM)
+  // We use our custom "open" method
+  dialog.current.open(); 
+}
+
+return <ResultModal ref={dialog} />;
+```
