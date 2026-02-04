@@ -708,3 +708,7 @@ export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
 ## Modulul 8 Working with Refs & Portals
 
 - [Vezi detalii working with refs & portals aici](08-Refs-Portals/Readme.md)
+
+## Modulul 9 Practice Project: Project Management App
+
+- [Vezi detalii aici](09-Practice-Project-Project-Management/Readme.md)
