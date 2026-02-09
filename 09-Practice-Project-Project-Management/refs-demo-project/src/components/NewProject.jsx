@@ -1,4 +1,3 @@
-import { devtools } from "globals";
 import Input from "./Input.jsx";
 import { useRef } from "react";
 import Modal from "./Modal.jsx";
@@ -28,6 +27,7 @@ export default function NewProject({ onAddNew, onCancel }) {
       title: title.current.value,
       description: description.current.value,
       dueDate: dueDate.current.value,
+      tasks: [],
     });
   }
   return (
