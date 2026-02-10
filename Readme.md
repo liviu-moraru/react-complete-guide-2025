@@ -712,3 +712,7 @@ export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
 ## Modulul 9 Practice Project: Project Management App
 
 - [Vezi detalii aici](09-Practice-Project-Project-Management/Readme.md)
+
+## Modulul 10  Reacr'c Context API & useRecucer - Advanced State Management
+
+- [Vezi detalii aici](10-Context-API-useReducer/Readme.md)
