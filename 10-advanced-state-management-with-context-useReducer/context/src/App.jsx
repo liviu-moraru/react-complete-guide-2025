@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import Header from "./components/Header.jsx";
 import Shop from "./components/Shop.jsx";
@@ -66,10 +66,13 @@ function App() {
       };
     });
   }
-
+  const ctxValue = {
+    items: shoppingCart.items,
+    addItem: handleAddItemToCart,
+  };
   return (
     <>
-      <CartContext.Provider value={{ items: [] }}>
+      <CartContext.Provider value={ctxValue}>
         <Header
           cart={shoppingCart}
           onUpdateCartItemQuantity={handleUpdateCartItemQuantity}
