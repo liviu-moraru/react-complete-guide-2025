@@ -1,4 +1,4 @@
-## Modulul 10  Reacr'c Context API & useRecucer - Advanced State Management
+## Modulul 10  React Context API & useReducer - Advanced State Management
 
 **Problema**: 
 - Daca avem mai multe componente care trebuie sa se integreze cu o singura stare si starea si handlerele trebuie sa se transmita in adancime catre o componenta care nu este un descendent direct al componentei ce geestioneaza starea
@@ -181,3 +181,46 @@ React folosește optimizări precum `shouldComponentUpdate` sau `React.memo` pen
 
 ### Sumar
 În esență, `propagateContextChange` este "mesagerul" care străbate infrastructura de Fiber nodes pentru a invalida cache-ul de randare al consumatorilor atunci când datele din context devin învechite. Fără această funcție, React nu ar ști ce componente adânc imbricate trebuie actualizate atunci când un Provider de la un nivel superior își schimbă valoarea.
+
+### useReducer
+
+- Problema: Centralizarea managementului starii.
+- Solutie:
+- Se centralizeaza managementul starii intr-o singura functie (reducer).
+- Aceasta in functie de un parametru(action), intoarce o noua stare, functie de vechea stare(trimisa ca prim parametru)
+- In general parametrul action este un obiect cu 2 proprietati:
+- type: tipul actiunii care se executa
+- payload: datele care se transmit cu actiunea
+- Avand acest reducer, o alta functie (dispacher) se poate folosi pentru a trimite actiunile la reducer (dispatch(action))
+- Hook-ul useReducer seteaza o stare initiala, implementeaza un dispatcher pentru schimbarea starii si intoarce un array continand:
+- starea actuala
+- dispatcher-ul pentru schimbarea starii
+
+- O implementare simplificata a lui useReducer ar fi:
+
+```javascript
+import { useState } from 'react';
+
+/**
+ * A conceptual implementation of useReducer using useState.
+ * 
+ * @param {Function} reducer - (state, action) => newState
+ * @param {any} initialArg - The initial state value or argument
+ * @param {Function} [init] - Optional initializer function
+ * @returns {[any, Function]} - [state, dispatch]
+ */
+function useMyReducer(reducer, initialArg, init) {
+  // 1. Initialize state (optionally using the init function)
+  const [state, setState] = useState(init ? init(initialArg) : initialArg);
+
+  // 2. Define the dispatch function
+  function dispatch(action) {
+    // 3. Update state by passing the current state and action to the reducer
+    setState((prevState) => reducer(prevState, action));
+  }
+
+  // 4. Return the state and the dispatch function
+  return [state, dispatch];
+}
+```
+- A se vedea un exemplu de utilizare [aici](../supl/useReducer.js)

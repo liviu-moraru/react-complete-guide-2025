@@ -715,4 +715,4 @@ export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
 
 ## Modulul 10  Reacr'c Context API & useRecucer - Advanced State Management
 
-- [Vezi detalii aici](10-Context-API-useReducer/Readme.md)
+- [Vezi detalii aici](10-advanced-state-management-with-context-useReducer/Readme.md)
