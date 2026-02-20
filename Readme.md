@@ -713,6 +713,10 @@ export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
 
 - [Vezi detalii aici](09-Practice-Project-Project-Management/Readme.md)
 
-## Modulul 10  Reacr'c Context API & useRecucer - Advanced State Management
+## Modulul 10  React Context API & useRecucer - Advanced State Management
 
 - [Vezi detalii aici](10-advanced-state-management-with-context-useReducer/Readme.md)
+
+## Modulul 11 Handling side effects & working with useEffect hook
+
+- [Vezi detalii aici](11-Side-Effects-useEffect/Readme.md)
