@@ -16,14 +16,16 @@ function useEffect(callback, dependencies) {
     const changed = hasChanged(oldDeps, dependencies);
 
     if (changed) {
-        if (_state[index]?.cleanup) {
-            _state[index].cleanup();
-        }
-        const cleanup = callback();
-        _state[index] = {
-            dependencies,
-            cleanup
-        }
+        queueMicrotask(() => {
+            if (_state[index]?.cleanup) {
+                _state[index].cleanup();
+            }
+            const cleanup = callback();
+            _state[index] = {
+                dependencies,
+                cleanup
+            }
+        });
     }
 }
 function useState(initialValue) {
@@ -63,6 +65,7 @@ function MyComponent() {
     }, [name]);
 
 
+    console.log("Component is returning...");
     // Simulate a user click
     return {
         click: () => {
