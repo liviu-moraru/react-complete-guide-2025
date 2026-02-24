@@ -31,3 +31,15 @@ The "Effect" in `useEffect` stands for **Side Effect**. React purposely delays t
 
 - useEffect este bine sa se foloseasca cand sunt de executat evenimente asincrone (fetch, geolocation etc.)
 - evenimentele sincrone pot rula fara useEffect
+
+### Un alt exemplu de folosire a useEffect()
+
+- Cand folosim useRef pentru a retine referinte catre elemente DOM, useEffect poate fi folosit pentru a adauga sau sterge evenimente de la elementele DOM.
+- Aceasta es in regula, pentru ca functia argument din useEffect este executata dupa prima randare a componentei, deci dupa ce prin proprietatea ref, elementul DOM este "legat" de obiectul intors de useRef.
+
+### Observatie: Ce se intampla cans se apasa Esc intr-o fereastra deschisa \<dialog>?
+
+- Apasand Esc browserul va inchide fereastra modala
+- Daca nu se capteaza evenimentul onClose pentru a se executa codul asociat, functionalitatea poate fi stricata
+- Ex: In Modal.jsx, daca nu se capteaza onClose, argumentul open ramane true si cand se apasa din nou pe un item din sectiunea de locuri care se doresc vizitate, argumentul neschimbandu-se, functia din useEffect nu se mai executa, deci fereastra modala nu se mai deschide.
+
