@@ -26,3 +26,8 @@ The "Effect" in `useEffect` stands for **Side Effect**. React purposely delays t
 | **After browser paints the UI** | **Yes** |
 
 *(Note: If you need an effect to run **before** the paint, React provides a specialized hook called `useLayoutEffect`, but even that runs after the `return` statement and DOM updates.)*
+
+### Cand sa nu se foloseasca useEffect()
+
+- useEffect este bine sa se foloseasca cand sunt de executat evenimente asincrone (fetch, geolocation etc.)
+- evenimentele sincrone pot rula fara useEffect
