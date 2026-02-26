@@ -43,3 +43,44 @@ The "Effect" in `useEffect` stands for **Side Effect**. React purposely delays t
 - Daca nu se capteaza evenimentul onClose pentru a se executa codul asociat, functionalitatea poate fi stricata
 - Ex: In Modal.jsx, daca nu se capteaza onClose, argumentul open ramane true si cand se apasa din nou pe un item din sectiunea de locuri care se doresc vizitate, argumentul neschimbandu-se, functia din useEffect nu se mai executa, deci fereastra modala nu se mai deschide.
 
+### useEffect() cu cleanup
+
+- Cand functia argument din useEffect intoarce o functie, aceasta functie este executata inainte de randarea urmatoare a componentei, sau **cand componenta este distrusa** (cand este scoasa din DOM)
+
+Ex: App.jsx
+```aiignore
+<Modal open={modalIsOpen} onClose={handleStopRemovePlace}>
+        <DeleteConfirmation
+          onCancel={handleStopRemovePlace}
+          onConfirm={handleRemovePlace}
+        />
+ </Modal>
+```
+Modal.jsx
+
+```aiignore
+<dialog className="modal" ref={dialog} onClose={onClose}>
+      {open ? children : null}
+ </dialog>,
+```
+Aici se vede ca daca open == false, copiii, daca existau in virtual DOM, sunt scosi (unmounted)
+- Este cazul componentei DeleteConfirmation.jsx
+
+DeleteConfirmation.jsx
+
+```aiignore
+useEffect(() => {
+    console.log("Timer started");
+    const timer = setTimeout(() => {
+      onConfirm();
+    }, 3000);
+    return () => {
+      console.log("Timer cleared");
+      clearTimeout(timer);
+    };
+  }, []);
+```
+- In acest exemplu, atunci cand userul apasa pe butonul "Cancel" pana sa treaca cele 3 secunde, `handleStopRemovePlace` este executata, aceasta seteaza variabila open pe valoarea false.
+- mai departe, aceasta face, ca DeleteConfirmation se fie unmounted din virtual DOM, ceea ce declaseaza functia cleanup inregistrata de useEffect, care apeleaza clearTimeout.
+
+- A se vedea si implementarea conceptuala a lui useEffect() in [../supl/hooks.js](../supl/hooks.js)
