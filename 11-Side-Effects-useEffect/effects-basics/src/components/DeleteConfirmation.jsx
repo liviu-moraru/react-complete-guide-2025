@@ -5,7 +5,7 @@ export default function DeleteConfirmation({ onConfirm, onCancel }) {
     console.log("Timer started");
     const timer = setTimeout(() => {
       onConfirm();
-    }, 3000);
+    }, 10000);
     return () => {
       console.log("Timer cleared");
       clearTimeout(timer);
